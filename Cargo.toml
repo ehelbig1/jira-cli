@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "template-cli",
-    "template-api"
+    "jira-cli",
+    "jira-api"
 ]
