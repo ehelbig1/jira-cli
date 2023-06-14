@@ -24,7 +24,12 @@ pub struct JiraApi<'a> {
 }
 
 impl<'a> JiraApi<'a> {
-    pub fn new(http_client: &'a reqwest::Client, api_key: &str, username: &str) -> Self {
+    pub fn new(
+        http_client: &'a reqwest::Client,
+        api_key: &str,
+        username: &str,
+        domain: &str,
+    ) -> Self {
         let api_key = base64::Engine::encode(
             &base64::engine::general_purpose::STANDARD,
             format!("{}:{}", username, api_key),
@@ -33,7 +38,7 @@ impl<'a> JiraApi<'a> {
         Self {
             http_client,
             api_key,
-            base_url: String::from("https://willowtree.atlassian.net"),
+            base_url: String::from(domain),
         }
     }
 }

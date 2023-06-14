@@ -16,8 +16,9 @@ impl Command for Opt {
         http_client: &reqwest::Client,
         api_key: &str,
         username: &str,
+        domain: &str,
     ) -> Result<(), anyhow::Error> {
-        let datasource = jira_api::JiraApi::new(http_client, api_key, username);
+        let datasource = jira_api::JiraApi::new(http_client, api_key, username, domain);
         let response = datasource.list_application_roles().await?;
 
         println!("{:#?}", response);

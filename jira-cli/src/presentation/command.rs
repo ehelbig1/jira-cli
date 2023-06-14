@@ -8,5 +8,6 @@ pub trait Command {
         http_client: &reqwest::Client,
         api_key: &str,
         username: &str,
+        domain: &str,
     ) -> Result<(), Error>;
 }

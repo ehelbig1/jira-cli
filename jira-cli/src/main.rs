@@ -14,6 +14,9 @@ struct Opt {
     #[structopt(long, env = "JIRA_USERNAME", hide_env_values = true)]
     username: String,
 
+    #[structopt(long, env = "JIRA_DOMAIN", hide_env_values = true)]
+    domain: String,
+
     #[structopt(subcommand)]
     subcommand: Subcommand,
 }
@@ -40,11 +43,16 @@ async fn main() -> Result<(), Error> {
 
     let api_key = &opt.api_key;
     let username = &opt.username;
+    let domain = &opt.domain;
 
     match opt.subcommand {
-        Subcommand::AnnouncementBanner(opt) => opt.run(&http_client, api_key, username).await?,
-        Subcommand::ApplicationRoles(opt) => opt.run(&http_client, api_key, username).await?,
-        Subcommand::IssuePicker(opt) => opt.run(&http_client, api_key, username).await?,
+        Subcommand::AnnouncementBanner(opt) => {
+            opt.run(&http_client, api_key, username, domain).await?
+        }
+        Subcommand::ApplicationRoles(opt) => {
+            opt.run(&http_client, api_key, username, domain).await?
+        }
+        Subcommand::IssuePicker(opt) => opt.run(&http_client, api_key, username, domain).await?,
     };
 
     Ok(())
